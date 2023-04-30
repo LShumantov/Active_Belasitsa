@@ -1,0 +1,30 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+
+}
+<div class="cmsms_breadcrumbs">
+    <div class="cmsms_breadcrumbs_inner align_right">
+
+        <ul class="breadcrumb">
+            @foreach (var page in CurrentPage.Ancestors().OrderBy("Level"))
+            {
+                if (page.DocumentTypeAlias == "containerArticles")
+                {
+                    <li class="cms_home"><a href="#">@page.GetPropertyValue("title_" + lang_cur)</a></li>
+                            <span class="breadcrumbs_sep"> / </span>
+                }
+                else
+                {
+                    <li class="cms_home"><a href="@page.Url">@page.GetPropertyValue("title_" + lang_cur)</a></li>
+                            <span class="breadcrumbs_sep"> / </span>
+                }
+            }
+
+            <li class="active">@CurrentPage.GetPropertyValue("title_" + lang_cur)</li>
+        </ul>
+
+    </div>
+</div>

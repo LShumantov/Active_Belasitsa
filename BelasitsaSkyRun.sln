@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BelasitsaSkyRun.Umbraco", "BelasitsaSkyRun.Umbraco\BelasitsaSkyRun.Umbraco.csproj", "{AFC5CEFF-D7F8-4643-8BA2-6469D8C16ECA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFC5CEFF-D7F8-4643-8BA2-6469D8C16ECA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFC5CEFF-D7F8-4643-8BA2-6469D8C16ECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFC5CEFF-D7F8-4643-8BA2-6469D8C16ECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFC5CEFF-D7F8-4643-8BA2-6469D8C16ECA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://klevret01.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = BelasitsaSkyRun.Umbraco\\BelasitsaSkyRun.Umbraco.csproj
+		SccProjectName1 = BelasitsaSkyRun.Umbraco
+		SccLocalPath1 = BelasitsaSkyRun.Umbraco
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,122 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+
+}
+
+<div id="middle">
+    @{Html.RenderPartial("Bredcamp");}
+    <div class="middle_inner">
+        <div class="content_wrap r_sidebar">
+            <div class="content entry" style="width:100%;">
+                <div class="blog opened-article">
+                    <article class="post format-standard hentry">
+                        <header class="cmsms_post_header entry-header">
+                            <span class="cmsms_post_format_img cmsms-icon-home"></span>
+                            <h1 class="cmsms_post_title entry-title" style="margin-top: -42px;">@CurrentPage.GetPropertyValue("title_" + lang_cur)</h1>
+                        </header>
+                        <p>@CurrentPage.GetPropertyValue("description_" + lang_cur)</p>
+                        <div class="cmsms_post_content entry-content">
+                            <div id="cmsms_row_554b576c54360" class="cmsms_row cmsms_color_scheme_default">
+                                <div class="cmsms_row_outer_parent">
+                                    <div class="cmsms_row_outer">
+                                        <div class="cmsms_row_inner">
+                                            <div class="cmsms_row_margin">
+                                                <div class="cmsms_column one_first">
+                                                    <div id="cmsms_row_555469b2e68c8" class="cmsms_row cmsms_color_scheme_default">
+                                                        <div class="cmsms_row_outer_parent">
+                                                            <div class="cmsms_row_outer">
+                                                                <div class="cmsms_row_inner">
+                                                                    <div class="cmsms_row_margin">
+                                                                        <div class="cmsms_column one_first">
+                                                                            <div class="cmsms_tabs tabs_mode_tour tabs_pos_left">
+                                                                                <ul class="cmsms_tabs_list">
+                                                                                    <li id="cmsms_tabs_list_item_555469b2e6dd4" class="cmsms_tabs_list_item current_tab">
+
+                                                                                        <a href="#">
+                                                                                            <span>Short Info</span>
+
+                                                                                            @{
+                                                                                                var end = CurrentPage.GetPropertyValue("category");
+
+                                                                                                for (int i = 0; i < end; i++)
+                                                                                                {
+                                                                                                    <i class="fa fa-star" aria-hidden="true" style="float:right; padding-left: 3px;"></i>
+                                                                                                }
+                                                                                            }
+
+                                                                                        </a>
+
+                                                                                    </li>
+                                                                                    <li id="cmsms_tabs_list_item_555469b2e6f0f" class="cmsms_tabs_list_item">
+                                                                                        <a href="#"><span>Contacts</span></a>
+                                                                                    </li>
+                                                                                    <li id="cmsms_tabs_list_item_555469b2e704e" class="cmsms_tabs_list_item">
+                                                                                        <a href="#"><span>Capacity</span></a>
+                                                                                    </li>
+                                                                                    <li id="cmsms_tabs_list_item_555469b2e7185" class="cmsms_tabs_list_item">
+                                                                                        <a href="#"><span>Gallery</span></a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                                <div class="cmsms_tabs_wrap">
+                                                                                    <div id="cmsms_tab_555469b2e6dd4" class="cmsms_tab active_tab">
+                                                                                        <div class="cmsms_tab_inner">
+                                                                                            <h2>Short Info</h2>
+                                                                                            <p>@CurrentPage.GetPropertyValue("shortDescription_" + lang_cur)</p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div id="cmsms_tab_555469b2e6f0f" class="cmsms_tab">
+                                                                                        <div class="cmsms_tab_inner">
+                                                                                            <h2>Contacts</h2>
+                                                                                            <p>@CurrentPage.GetPropertyValue("contact_" + lang_cur)</p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div id="cmsms_tab_555469b2e704e" class="cmsms_tab">
+                                                                                        <div class="cmsms_tab_inner">
+                                                                                            <h2>Capacity</h2>
+                                                                                            <p>@CurrentPage.GetPropertyValue("capacity_" + lang_cur)</p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div id="cmsms_tab_555469b2e7185" class="cmsms_tab">
+                                                                                        <div class="cmsms_tab_inner">
+                                                                                            <h2>Gallery</h2>
+                                                                                            @if (Model.Content.HasValue("gallery_" + lang_cur))
+                                                                                            {
+                                                                                                var caseStudyImagesList = Model.Content.GetPropertyValue<string>("gallery_" + lang_cur).Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse);
+                                                                                                var caseStudyImagesCollection = Umbraco.TypedMedia(caseStudyImagesList).Where(x => x != null);
+
+                                                                                                foreach (var caseStudyImage in caseStudyImagesCollection)
+                                                                                                {
+                                                                                                    <a href="@caseStudyImage.Url" rel="ilightbox"><img src="@caseStudyImage.Url" style="width:200px;height:200px" class="alignnone size-thumbnail" alt="6772398921_e349a76c6c_b1" width="200" height="200" /></a>
+
+                                                                                                }
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cmsms_text" style="margin-top: 40px;">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cl"></div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,111 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Event>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";   
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+
+
+}
+
+<style type="text/css">
+
+
+    .cmsms_dynamic_cart .widget_shopping_cart_content .cart_list {
+        overflow-y: auto;
+    }
+
+    .header_mid_inner .logo {
+        position: static;
+    }
+
+    #footer.cmsms_footer_default .footer_inner {
+        min-height: 450px;
+    }
+
+    .fixed_footer #main {
+        margin-bottom: 450px;
+    }
+</style>
+
+
+
+<div id="page" class="csstransition cmsms_liquid fixed_header hfeed site">
+    <div id="main">
+        <div id="middle">
+            @{Html.RenderPartial("Bredcamp");}
+            <div class="middle_inner">
+                <div class="content_wrap fullwidth profile_page">           
+                    <div class="middle_content entry" role="main">
+                        <div class="profiles opened-article">                  
+                           <article class="profile type-profile hentry">
+                                         <div class="profile_sidebar">
+											<div class="profile_details entry-meta">
+                    
+                                        @{Html.RenderPartial("_LayoutEvent");}                                     
+                                            </div>
+	                                     </div>
+                                    <div class="profile_content with_sidebar">
+                                        <figure>
+                                            <div class="cmsms_profile_content entry-content">
+                                                <p><h1>@CurrentPage.GetPropertyValue("title_" + lang_cur)</h1></p>
+                                                <div class="cl"></div>
+                                            </div>
+                                            <div class="cmsms_profile_content entry-content">
+                                                <p>@CurrentPage.GetPropertyValue("shortDescription_" + lang_cur).</p>
+                                                <div class="cl"></div>
+                                            </div>
+                                            <a href="img/images/Karen-Dawson-big.jpg" title="Karen Dawson" class="cmsms_img_link preloader highImg" rel="ilightbox[img_2473_554c72320ffdb]">
+                                                <img width="820" height="490" src='@CurrentPage.GetCropUrl("image", "ImageForEvent")' class="full-width" alt="Karen Dawson" title="Karen Dawson" />
+                                            </a>
+                                        </figure>
+                                        <div class="cmsms_profile_content entry-content">
+                                            <p>@CurrentPage.GetPropertyValue("description_" + lang_cur).</p>
+                                            <div class="cl"></div>
+                                        </div>
+                                    </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

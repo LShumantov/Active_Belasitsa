@@ -1,0 +1,113 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+
+}
+<style>
+    .imgdisc {
+        position: relative;
+        background: rgb(158, 213, 91);
+        padding: 15px;
+        color: #ffffff;
+    }
+</style>
+
+<div id="page" class="csstransition cmsms_liquid fixed_header hfeed site">
+    <div id="main">
+        <div id="middle">
+            @{Html.RenderPartial("Bredcamp");}
+            <div class="middle_inner">
+                <div class="content_wrap r_sidebar">
+                    <div class="content entry" @*role="main"*@>
+                        <div class="blog opened-article">
+                            <article class="post format-standard hentry">
+                                <header class="cmsms_post_header entry-header">
+                                    <span class="cmsms_post_format_img cmsms-icon-home"></span>
+                                    <h1 class="cmsms_post_title entry-title" style="margin-top: -44px">@CurrentPage.GetPropertyValue("title_" + lang_cur)</h1>
+                                </header>
+                                <div style="font-size:16px">
+
+                                    <p>@CurrentPage.GetPropertyValue("shortDescription_" + lang_cur)</p>
+
+                                </div>
+                                <div class="cmsms_post_content entry-content">
+                                    <div id="cmsms_row_554b576c54360" class="cmsms_row cmsms_color_scheme_default">
+                                        <div class="cmsms_row_outer_parent">
+                                            <div class="cmsms_row_outer">
+                                                <div class="cmsms_row_inner">
+                                                    <div class="cmsms_row_margin">
+                                                        <div class="cmsms_column one_first">
+                                                            @if (Model.Content.HasValue("image"))
+                                                            {
+                                                                <figure>
+                                                                    <img src='@CurrentPage.GetCropUrl("image", "articlesTop")' alt="Bear Population" title="Bear Population" class="<full-width></full-width>">
+                                                                    <div>
+                                                                        <p class="imgdisc">@CurrentPage.GetPropertyValue("imageName_" + lang_cur)</p>
+                                                                    </div>
+                                                                </figure>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="cmsms_post_format_img cmsms-icon-picture"></span>
+                                                            }
+
+                                                            <div class="text" style="font-size:15px;margin-top: 40px;">
+                                                                <p>@CurrentPage.GetPropertyValue("description_" + lang_cur)</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.Content.HasValue("mediaPicker") == true)
+        {
+            <div id="main">
+                <div id="cmsms_row_555343bed7ad3" class="cmsms_row cmsms_color_scheme_default" data-stellar-background-ratio="0.5">
+                    <div class="cmsms_row_outer_parent">
+                        <div class="cmsms_row_outer">
+                            <div class="cmsms_row_inner">
+                                <div class="cmsms_row_margin">
+                                    <div class="cmsms_row_inner">
+                                        <div class="cmsms_row_margin">
+                                            <div class="cmsms_row_margin cmsms_14141414">
+                                                @if (Model.Content.HasValue("mediaPicker"))
+                                                {
+                                                    var caseStudyImagesList = Model.Content.GetPropertyValue<string>("mediaPicker").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse);
+                                                    var caseStudyImagesCollection = Umbraco.TypedMedia(caseStudyImagesList).Where(x => x != null);
+
+
+                                                    foreach (var caseStudyImage in caseStudyImagesCollection)
+                                                    {
+                                                        <div class="cmsms_column one_fourth">
+                                                            <div class="cmsms_img  cmsms_image_n with_caption">
+                                                                <a href="@caseStudyImage.Url" rel="ilightbox">
+                                                                    <img src="@caseStudyImage.Url" style="height:212px;" />
+                                                                </a>
+                                                                <p class="cmsms_img_caption"></p>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

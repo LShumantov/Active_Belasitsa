@@ -1,0 +1,70 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<BelasitsaSkyRun.Umbraco.Models.LoginModel>
+@using Umbraco.Web
+
+<style>
+    .form_field_wrap, form_info submit_wrap {
+        color: darkseagreen;
+    }
+</style>
+
+
+@if (!Umbraco.MemberIsLoggedOn())
+{
+    using (Html.BeginUmbracoForm("SubmitLogin", "Member", System.Web.Mvc.FormMethod.Post, new { id = "login" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+
+
+        <div class="form_info cmsms_input one_half">
+            <div class="form_field_wrap">
+
+                @Umbraco.GetDictionaryValue("LoginUserName")
+                @Html.TextBoxFor(m => m.UserName, new { placeholder = Umbraco.GetDictionaryValue("LoginUserName") })
+            </div>
+        </div>
+        <div class="form_info cmsms_input one_half">
+            <div class="form_field_wrap">
+                @Umbraco.GetDictionaryValue("LoginEmail")
+                @Html.TextBoxFor(m => m.Email, new { placeholder = Umbraco.GetDictionaryValue("LoginEmail") })
+            </div>
+        </div>
+
+        <div class="form_info cmsms_input one_half">
+            <div class="form_field_wrap">
+                @Umbraco.GetDictionaryValue("LoginBirthPlace")
+                @Html.TextBoxFor(m => m.BirthPlace, new { placeholder = Umbraco.GetDictionaryValue("LoginBirthPlace") })
+            </div>
+        </div>
+
+        <div class="form_info cmsms_input one_half">
+            <div class="form_field_wrap">
+                @Umbraco.GetDictionaryValue("LoginBirthDate")
+                @Html.TextBoxFor(m => m.BirthDate, new { placeholder = Umbraco.GetDictionaryValue("LoginBirthDate") })
+            </div>
+        </div>
+
+
+        <div class="form_info cmsms_input one_half">
+            <div class="form_field_wrap" style="margin-top: 24px;">
+                @Html.RadioButtonFor(model => model.Gender, "true", new { id = "male" })
+                @Html.Label("male", Umbraco.GetDictionaryValue("LoginGenderMale"))
+
+                @Html.RadioButtonFor(model => model.Gender, "false", new { id = "female" })
+                @Html.Label("female", Umbraco.GetDictionaryValue("LoginGenderFemale"))<br />
+            </div>
+        </div>
+
+        <div class="cl"></div>
+        <div class="form_info submit_wrap" style="margin-left: 300px;font-size: 20px;">
+            @Html.ValidationSummary()
+            <button name="login" type="submit" style="color: #afcfaf;">@Umbraco.GetDictionaryValue("Login")</button>
+        </div>
+
+    }
+}
+else
+{
+    Html.RenderAction("RenderLogout", "Member");
+}

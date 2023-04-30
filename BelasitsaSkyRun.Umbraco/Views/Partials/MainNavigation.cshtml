@@ -1,0 +1,74 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+    var home = CurrentPage.Site();
+
+}
+
+<script type="text/javascript">
+    function goToCulture(target) {
+        var str = window.location.pathname;
+        window.location.replace("/" + target + str.substr(3, str.leght));
+    }
+</script>
+
+
+@if (home.Children.Any())
+{
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+    <ul id="navigation" class="navigation" style="height: 95px;">
+        @if (home.Children.Any())
+        {
+            @renderNode(home.Children)
+        }
+
+
+
+        <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="padding: 0px 34px"><i class="fa fa-globe"></i> <b class="lightcaret mt-2">@Culture</b></a>
+            <ul class="dropdown-menu">
+                <li><a href="#" onClick="goToCulture('bg')">Български</a></li>
+                <li><a href="#" onClick="goToCulture('en')">English</a></li>
+            </ul>
+        </li>
+    </ul>
+}
+
+
+@helper renderNode(dynamic pages)
+{
+var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+
+foreach (var page in (((IEnumerable<dynamic>)pages).Where(q => q.DocumentTypeAlias == "containerAccommodations" || q.DocumentTypeAlias == "containerEvents"
+|| q.DocumentTypeAlias == "event" || q.DocumentTypeAlias == "containerNews" || q.DocumentTypeAlias == "containerArticles" || q.DocumentTypeAlias == "containerCultures"
+|| q.DocumentTypeAlias == "containerSettlements" || q.DocumentTypeAlias == "containerTourists" || q.DocumentTypeAlias == "genericPage" || q.DocumentTypeAlias == "contactUs")))
+{
+
+    if (page.DocumentTypeAlias != "containerArticles")
+    {
+
+            <li>
+                <a href="@page.Url">
+                    <span class="nav_bg_clr" style="height: 95px;"></span>
+                    <span>@page.GetPropertyValue("title_" + lang_cur)</span>
+                </a>
+                <ul class="sub-menu">
+                    @*level 3*@
+                    @renderNode(page.Children)
+                </ul>
+            </li>
+    }
+    else
+    {
+            <li>
+                <a href="#">
+                    <span class="nav_bg_clr" style="height: 95px;"></span>
+                    <span>@page.GetPropertyValue("title_" + lang_cur)</span>
+                </a>
+                <ul class="sub-menu">
+                    @renderNode(page.Children)
+                </ul>
+            </li>
+    }
+}
+}

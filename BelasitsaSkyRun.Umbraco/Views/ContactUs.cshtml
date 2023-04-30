@@ -1,0 +1,85 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+
+}
+
+
+
+<div id="page" class="csstransition cmsms_liquid fixed_header hfeed site">
+    <div id="main">
+        <section id="middle">
+            @{Html.RenderPartial("Bredcamp");}
+            <div class="headline cmsms_color_scheme_default">
+                <div class="fixContact" style="height:110px;margin-top: 20px;">
+                    <div class="headline_color"></div>
+                    <div class="headline_inner align_left">
+                        <div class="headline_aligner"></div><div class="headline_text"><h1 class="entry-title">@CurrentPage.GetPropertyValue("title_" + lang_cur)</h1></div>
+                    </div>
+                </div>
+            </div>
+            <div class="middle_inner">
+
+
+                <div id="map" style="height: 600px; width: 100%; pointer-events:none;"></div>
+                <script>
+                    function initMap() {
+                        var uluru = { lat: 41.4378004, lng: 22.6427428 };
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                            zoom: 12,
+                            center: uluru
+                        });
+                        var marker = new google.maps.Marker({
+                            position: uluru,
+                            map: map
+                        });
+                    }
+                </script>
+                <script async defer
+                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTu281AkaJ7C3uAeyZIheNF3JsB6-wJug&callback=initMap">
+
+                </script>
+
+                <div id="cmsms_row_555091c556fa4" class="cmsms_row cmsms_color_scheme_default">
+                    <div class="cmsms_row_outer_parent">
+                        <div class="cmsms_row_outer">
+                            <div class="cmsms_row_inner">
+                                <div class="cmsms_row_margin">
+                                    <div class="cmsms_column one_half">
+                                        <h3 id="cmsms_heading_555091c557200" class="cmsms_heading">@Umbraco.GetDictionaryValue("ContactSendMessageHeader")</h3>
+                                        <div class="cmsms_contact_form">
+                                            <div class="cmsms-form-builder">
+                                                <div class="cmsms_notice cmsms_notice_success cmsms-icon-check-2 success_box widgetinfo" style="display:none;">
+                                                    <div class="notice_icon"></div>
+                                                    <div class="notice_content">
+                                                        <p>Thank You! <br />Your message has been sent successfully.</p>
+                                                    </div>
+                                                </div>
+
+                                                @Html.Action("ContactUsTemplate", "ContactForm")
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cmsms_column one_half">
+                                        <h3 id="cmsms_heading_555091c5584b3" class="cmsms_heading">@Umbraco.GetDictionaryValue("ContactInfoTitle")<br /></h3>
+                                        <div class="cmsms_text" style="margin-top: 40px;white-space: pre-line;font-size:15px;">
+                                            <p>@CurrentPage.GetPropertyValue("description_" + lang_cur)</p>
+                                            <p>&nbsp;</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cl"></div>
+            </div>
+        </section>
+        <a href="javascript:void(0);" id="slide_top" class="cmsms-icon-up-open-mini"></a>
+    </div>
+</div>
+

@@ -1,0 +1,82 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+
+@{
+    Layout = "Master.cshtml";
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+
+}
+<style>
+hr{
+       margin-bottom: 10px;
+    margin-top: 0px;
+    border-width: 1px;
+    color: #979ca4;
+}
+
+.imgdisc {
+    position: relative;
+    background: rgb(158, 213, 91);
+    padding: 15px;
+    color: #ffffff;
+}
+
+</style>
+
+<div id="middle">
+    @{Html.RenderPartial("Bredcamp");}
+    <div class="middle_inner">
+        <div class="content_wrap r_sidebar">
+            <div class="content entry" @*role="main"*@>
+                <div class="blog opened-article">
+                    <article class="post format-standard hentry">
+                        <header class="cmsms_post_header entry-header">
+                            <span class="cmsms_post_format_img cmsms-icon-news"></span>
+                            <h1 class="cmsms_post_title entry-title" style="margin-top: -42px;">@CurrentPage.GetPropertyValue("title_" + lang_cur)</h1>
+                        </header>
+                        <div style="font-size:16px;">                          
+                            <p>@CurrentPage.GetPropertyValue("shortDescription_" + lang_cur)</p>                           
+                        </div>
+                        <div class="cmsms_post_content entry-content">
+                            <div id="cmsms_row_554b576c54360" class="cmsms_row cmsms_color_scheme_default">
+                                <div class="cmsms_row_outer_parent">
+                                    <div class="cmsms_row_outer">
+                                        <div class="cmsms_row_inner">
+                                            <div class="cmsms_row_margin">
+                                                <div class="cmsms_column one_first">
+                                                     @if (Model.Content.HasValue("image"))
+	                                                          {	
+                                                    <figure>
+                                                        <img src='@CurrentPage.GetCropUrl("image", "articlesTop")' alt="Bear Population" title="Bear Population" class="<full-width></full-width>">
+                                                        <div>
+                                                            <p class="imgdisc">@CurrentPage.GetPropertyValue("imageName_" + lang_cur)</p>
+                                                        </div>
+                                                      </figure>
+                                                     }
+                                                     else
+                                                     {
+                                                        <span class="cmsms_post_format_img cmsms-icon-picture"></span>
+                                                     }
+                                                                                                    
+                                                    <div class="text"style="font-size: 15px;margin-top: 40px;">
+                                                        <p>@CurrentPage.GetPropertyValue("description_" + lang_cur)</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cl"></div>
+                        </div>
+                        <footer class="cmsms_post_footer entry-meta">
+                            <div class="cmsms_post_meta_info">
+                                <abbr class="published cmsms_post_date cmsms-icon-calendar-8" title="July 20, 2014">@CurrentPage.GetPropertyValue("dateTime").ToString("dd/MM/yyyy")</abbr>
+                            </div>                          
+                        </footer>
+                    </article>                          
+               </div>
+            </div>         
+        </div>
+    </div>
+</div>

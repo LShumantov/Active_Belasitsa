@@ -1,0 +1,149 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.ContainerCultures>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+
+
+
+    var pageSize = 4;
+    var page = 1;
+    int.TryParse(Request.QueryString["page"], out page);
+
+
+
+    var itemsArticles = CurrentPage.Descendants("articles");
+    var totalPages = (int)Math.Ceiling((double)itemsArticles.Count() / (double)pageSize);
+    if (page > totalPages)
+    {
+        page = totalPages;
+    }
+    else if (page < 1)
+    {
+        page = 1;
+    }
+
+
+
+
+
+
+
+
+}
+<style>
+    .pagination {
+        display: inline-block;
+    }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+            .pagination a.active {
+                background-color: #4CAF50;
+                color: white;
+                border-radius: 5px;
+            }
+
+            .pagination a:hover:not(.active) {
+                background-color: #ddd;
+                border-radius: 5px;
+            }
+
+    a.page-numbers.current {
+        background-color: #ddd;
+    }
+</style>
+
+<section id="middle">
+    @{Html.RenderPartial("Bredcamp");}
+    <div class="middle_inner">
+        <div id="cmsms_row_55531400bdf60" class="cmsms_row cmsms_color_scheme_default" data-stellar-background-ratio="0.5">
+            <div class="cmsms_row_outer_parent">
+                <div class="cmsms_row_outer">
+                    <div class="cmsms_row_inner">
+
+
+                        <div class="cmsms_row_margin">
+                            <div class="cmsms_column one_first">
+                                <div class="headline_text"><h1 class="entry-title" style="margin-bottom: 40px; margin-top: 50px;">@CurrentPage.GetPropertyValue("title_" + lang_cur)</h1></div>
+
+                                <div class="quote_grid quote_two">
+                                    <div class="quote_vert"></div>
+
+                                    <div class="quotes_list">
+                                        @{
+                                            int i = 1;
+
+
+
+                                            foreach (var item in itemsArticles.Skip((page - 1) * pageSize).Take(pageSize))
+                                            {
+                                                if (i != 1 && i % 2 == 1)
+                                                {
+                                                    @:
+                                                </div>
+                                                    @:<div class="quotes_list">
+                                                }
+                                                i++;
+                                                <div class="cmsms_quote">
+                                                    <article class="cmsms_quote_inner">
+                                                        <a href="@item.Url">
+
+                                                            <figure class="quote_image">
+                                                                @if (item.HasValue("image"))
+                                                                {
+                                                                    <img width="200" height="200" src='@item.GetCropUrl("image", "ImageForContainers")' class="attachment-thumbnail" alt="organic-img" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div style="width:146px; margin-top:20px">
+                                                                        <span class="cmsms_post_format_img cmsms-icon-picture"></span>
+                                                                    </div>
+                                                                }
+                                                            </figure>
+
+
+
+                                                        </a>
+                                                        <div class="quote_content_wrap">
+                                                            <div class="quote_content">
+                                                                <h4 class="quote_title">@item.GetPropertyValue("title_" + lang_cur)</h4>
+                                                                <p>@item.GetPropertyValue("shortDescription_" + lang_cur)</p>
+                                                            </div>
+                                                        </div>
+                                                    </article>
+                                                </div>
+                                            }
+
+                                        }
+                                    </div>
+                                    <div class="quotes_list"></div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <aside class="post_nav">
+                            <span class="pagination">
+                                @for (int p = 1; p < totalPages + 1; p++)
+                                {
+                                    <span class="active">
+                                        <a style="color: rgb(0, 197, 41); font-size: 16px;" class="page-numbers @(p == page ? "current" : string.Empty)" href="?page=@p">@p</a>
+                                    </span>
+                                }
+                            </span>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<a href="javascript:void(0);" id="slide_top" class="cmsms-icon-up-open-mini"></a>
+
+

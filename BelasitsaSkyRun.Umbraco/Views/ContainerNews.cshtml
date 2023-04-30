@@ -1,0 +1,165 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.ContainerNews>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+
+    var pageSize = 4;
+    var page = 1;
+    int.TryParse(Request.QueryString["page"], out page);
+
+    var items = CurrentPage.Descendants("news");
+
+    var totalPages = (int)Math.Ceiling((double)items.Count() / (double)pageSize);
+
+    if (page > totalPages)
+    {
+        page = totalPages;
+    }
+    else if (page < 1)
+    {
+        page = 1;
+    }
+
+}
+<style>
+    .pagination {
+        display: inline-block;
+    }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+            .pagination a.active {
+                background-color: #4CAF50;
+                color: white;
+                border-radius: 5px;
+            }
+
+            .pagination a:hover:not(.active) {
+                background-color: #ddd;
+                border-radius: 5px;
+            }
+
+    a.page-numbers.current {
+        background-color: #ddd;
+    }
+</style>
+
+
+
+
+
+<section id="middle">
+    @{Html.RenderPartial("Bredcamp");}
+    <div class="middle_inner">
+        <div id="cmsms_row_5548a7b76965e" class="cmsms_row cmsms_color_scheme_default">
+            <div class="cmsms_row_outer_parent">
+                <div class="cmsms_row_outer">
+                    <div class="cmsms_row_inner">
+                        <div class="cmsms_row_margin cmsms_11">
+                            <div class="cmsms_column one_first">
+                               
+
+                                <div class="headline_text"><h1 class="entry-title">@CurrentPage.GetPropertyValue("title_" + lang_cur)</h1></div>
+
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cmsms_row_554cca4e32ae5" class="cmsms_row cmsms_color_scheme_default">
+            <div class="cmsms_row_outer_parent">
+                <div class="cmsms_row_outer">
+                    <div class="cmsms_row_inner">
+                        <div class="cmsms_row_margin">
+                            <div class="cmsms_column one_first">
+                                <div class="cmsms_wrap_blog entry-summary" id="blog_554cca4e32d5c" data-meta="date,categories,author,comments,likes">
+                                    <script type="text/javascript">
+                                        jQuery(document).ready(function () {
+                                            (function ($) {
+                                                if ($('#blog_554cca4e32d5c').find('article').length == '0') {
+                                                    return false;
+                                                }
+
+
+                                                startBlog(
+                                                    '554cca4e32d5c',
+                                                    'columns',
+                                                    'masonry',
+                                                    'date',
+                                                    'DESC',
+                                                    '12',
+                                                    ''
+                                                );
+                                            })(jQuery);
+                                        });
+                                    </script>
+                                    <div class="blog columns masonry cmsms_3">
+                                         @{
+                                             foreach (var item in items.Skip((page - 1) * pageSize).Take(pageSize))
+                                             {
+
+                                                 if ("news" != null)
+                                                 {
+
+                                        <article class="cmsms_masonry_type post" data-category="ecology home">
+                                            <span class="cmsms_post_format_img  cmsms-icon-desktop-3"></span>
+                                            <div class="cmsms_post_cont">
+                                                <figure>
+                                                    <a href="@item.Url" title="The Ozone Layer" class="cmsms_img_link preloader">
+                                                        <img width="580" height="390" src='@item.GetCropUrl("image", "ImageForContainerNews")' class="full-width" alt="The Ozone Layer" title="The Ozone Layer" />
+                                                    </a>
+                                                </figure>
+                                                <header class="cmsms_post_header entry-header">
+                                                    <h2 class="cmsms_post_title entry-title">
+                                                        <a href="@item.Url">@item.GetPropertyValue("title_" + lang_cur)</a>
+                                                    </h2>
+                                                </header>
+                                                <div class="cmsms_post_cont_info entry-meta">
+                                                   <span class="cmsms_post_category">  <a href="@item.Url" rel="category tag">@item.GetPropertyValue("shortDescription_" + lang_cur)</a></span>
+                                                </div>
+                                                <div class="cmsms_post_content entry-content"></div>
+                                                <footer class="cmsms_post_footer entry-meta tac">
+                                                    <div class="cmsms_post_meta_info">
+                                                         <a href="@item.Url">
+                                                        <abbr class="published cmsms_post_date cmsms-icon-calendar-8" title="July 20, 2014">@item.GetPropertyValue("dateTime").ToString("dd/MM/yyyy")</abbr>
+                                                        </a>
+                                                    </div>
+                                                </footer>
+                                            </div>
+                                        </article>
+                                                     }
+                                                 }
+                                             }
+
+                                    </div>
+                                    <div class="cmsms_wrap_more_posts"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside class="post_nav">
+                            <span class="pagination">
+                                @for (int p = 1; p < totalPages + 1; p++)
+                                {
+                                    <span class="active">
+                                        <a style="color: rgb(0, 197, 41); font-size: 16px;" class="page-numbers @(p == page ? "current" : string.Empty)" href="?page=@p">@p</a>
+                                    </span>
+                                }
+                            </span>
+                        </aside>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<a href="javascript:void(0);" id="slide_top" class="cmsms-icon-up-open-mini"></a>

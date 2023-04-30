@@ -1,0 +1,35 @@
+﻿@model BelasitsaSkyRun.Umbraco.Models.ContactUsModel
+
+@{
+    Layout = null;
+}
+
+
+
+
+@using (Html.BeginForm("ContactForm", "ContactUsTemplate", FormMethod.Post))
+{
+    <p class="@(ViewData.ModelState.IsValid ? "" : "errorText")">
+        @(ViewData.ModelState.IsValid ? "*Mandatory" : "*Please complete the mandatory fields")      
+    </p>
+    <div class="form_info cmsms_input one_half">   
+        <div class="form_field_wrap">
+            <input type="text" name="Name" id="Name" value="@Model.Name"  placeholder="Name" size="22" tabindex="3" class="@(!ViewData.ModelState.IsValid && ViewData.ModelState["Name"].Errors.Count > 0 ? "error" : string.Empty) " />
+        </div>
+    </div>
+    <div class="form_info cmsms_input one_half">       
+        <div class="form_field_wrap">
+            <input type="text" name="Email"  id="Email" value="@Model.Email" placeholder="Email" size="22" tabindex="4" class="@(!ViewData.ModelState.IsValid && ViewData.ModelState["Email"].Errors.Count > 0 ? "error" : string.Empty)" />
+        </div>
+    </div>
+    <div class="form_info cmsms_textarea one_first">       
+        <div class="form_field_wrap">
+            <textarea name="Message" id="Message" cols="28" rows="6" tabindex="7" placeholder="Message" class="@(!ViewData.ModelState.IsValid && ViewData.ModelState["Message"].Errors.Count > 0 ? "error" : string.Empty)">@Model.Message</textarea>
+        </div>
+    </div>
+    <div class="cl"></div>
+    <div class="form_info submit_wrap">
+        <button type="submit"class="cmsms_button"><span>Send message</span></button>
+    </div> 
+}
+

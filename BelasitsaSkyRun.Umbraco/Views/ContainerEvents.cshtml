@@ -1,0 +1,100 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.ContainerEvents>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+
+    var pageSize = 4;
+    var page = 1;
+    int.TryParse(Request.QueryString["page"], out page);
+
+    var items = CurrentPage.Descendants("event");
+
+    var totalPages = (int)Math.Ceiling((double)items.Count() / (double)pageSize);
+
+    if (page > totalPages)
+    {
+        page = totalPages;
+    }
+    else if (page < 1)
+    {
+        page = 1;
+    }
+}
+
+
+
+
+<section id="middle">
+    @{Html.RenderPartial("Bredcamp");}
+    <div class="headline cmsms_color_scheme_default">
+        <div class="headline_outer">
+            <div class="headline_color"></div>
+            <div class="headline_inner align_left">
+                <div class="headline_text"><h1 class="entry-title"style="margin-bottom: 40px;margin-top: 50px;">@CurrentPage.GetPropertyValue("title_" + lang_cur)</h1></div>                       
+            </div>
+        </div>
+    </div>
+    <div class="middle_inner">     
+        <div id="cmsms_row_554b1fb33b0bf" class="cmsms_row cmsms_color_scheme_default">
+            <div class="cmsms_row_outer_parent">
+                <div class="cmsms_row_outer">
+                    <div class="cmsms_row_inner">
+                        <div class="cmsms_row_margin">
+                            <div class="cmsms_column one_first"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cmsms_row_554b1fb33b3ed" class="cmsms_row cmsms_color_scheme_default">
+            <div class="cmsms_row_outer_parent">
+                <div class="cmsms_row_outer">
+                    <div class="cmsms_row_inner">
+                        <div class="cmsms_row_margin">
+                            <div class="cmsms_column one_first">
+                                <div class="cmsms_profile vertical" data-animation="fadeInUp" data-delay="0">                             
+                                    @{
+                                        var countOfEvent =  items.Skip((page - 1) * pageSize).Take(pageSize);
+
+                                        var contact = Umbraco.TypedContent(1541);
+                                        
+                                        int i = 1;
+                                        foreach (var item in countOfEvent.OrderBy("dateOfEvent desc"))
+                                        {                                        
+                                            <article class="@(i % 2 == 0 ? "profile_even" : string.Empty) format-profile">
+                                              <div class="pl_content">
+                                                  <h3 class="entry-title cmsms_valid_title">
+                                                      <a  href="@item.Url">@item.GetPropertyValue("title_" + lang_cur)</a>
+                                                  </h3>
+                                                  <h5 class="pl_subtitle">@item.GetPropertyValue("locationName_" + lang_cur)</h5>
+                                                  <div class="entry-content">@item.GetPropertyValue("shortDescription_" + lang_cur)</div>
+                                              </div>
+                                              <div class="pl_img">
+                                                  <figure>
+                                                      <a href="@item.Url">
+                                                          <img width="250" height="250" src='@item.GetCropUrl("image", "ImageForContainerEvent")'class="attachment-square-thumb" alt="Karen Dawson" title="Karen Dawson">
+                                                      </a>
+                                                  </figure>
+                                              </div>                                                                                                                                                                                                       	                                                                                                   
+                                                <div class="form_info submit_wrap" style="margin-left: 102px; margin-top: 136px;">
+                                                    <a href="@contact.Url">
+                                                        <button name="login" type="submit" class="cmsms_button" style="font-size: 23px;">@Umbraco.GetDictionaryValue("ContainerRegisterForEvent")</button>
+                                                   </a>
+                                              </div>                                                                                                   
+                                             <div class="cl"></div>
+                                            </article>                                                                                                     
+                                            i++;                                                                         
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+                        </div>                                    
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="cl"></div>
+    </div>
+</section>

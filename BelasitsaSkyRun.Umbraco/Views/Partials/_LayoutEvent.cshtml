@@ -1,0 +1,216 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+    var home = @CurrentPage.Site();
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+    var EventPage = (CurrentPage.DocumentTypeAlias == "login" || CurrentPage.DocumentTypeAlias == "genericPage") ? CurrentPage.Parent : CurrentPage;
+
+}
+
+
+<style>
+    /*style for statistics*/
+    .cmsms_stats.shortcode_animated #cmsms_stat_553e49e836051.cmsms_stat {
+        width: 100%;
+    }
+
+    #cmsms_stat_553e49e836051 .cmsms_stat_inner {
+        background-color: #57cbe1;
+        color: #ffffff;
+    }
+
+    .cmsms_stats.shortcode_animated #cmsms_stat_553e49e8360f4.cmsms_stat {
+        width: 80%;
+    }
+
+    #cmsms_stat_553e49e8360f4 .cmsms_stat_inner {
+        background-color: #62e0c1;
+        color: #ffffff;
+    }
+
+    .cmsms_stats.shortcode_animated #cmsms_stat_553e49e836189.cmsms_stat {
+        width: 70%;
+    }
+
+    #cmsms_stat_553e49e836189 .cmsms_stat_inner {
+        background-color: #7fe092;
+        color: #ffffff;
+    }
+
+    .cmsms_stats.shortcode_animated #cmsms_stat_553e49e836214.cmsms_stat {
+        width: 60%;
+    }
+
+    #cmsms_stat_553e49e836214 .cmsms_stat_inner {
+        background-color: #b7f275;
+        color: #ffffff;
+    }
+
+    .cmsms_stats.shortcode_animated #cmsms_stat_553e49e83629e.cmsms_stat {
+        width: 80%;
+    }
+
+    #cmsms_stat_553e49e83629e .cmsms_stat_inner {
+        background-color: #c9ef5f;
+        color: #ffffff;
+    }
+
+    #cmsms_row_12 {
+        background-image: url(/theme/img/images/bg-big-water.jpg);
+        background-position: top center;
+        background-repeat: repeat-y;
+        background-attachment: scroll;
+        background-size: cover;
+    }
+</style>
+
+
+
+
+@{
+    IEnumerable<dynamic> childs = ((IEnumerable<dynamic>)home.Children()).Where(q => (q.DocumentTypeAlias == "event" || q.DocumentTypeAlias == "genericPage" || q.DocumentTypeAlias == "login"));
+    bool hasChild = childs.Any();
+    if (hasChild)
+    {
+
+        <div class="profile_details entry-meta">
+            <a href="@EventPage.Url">
+                <h2 class="profile_details_title">@EventPage.GetPropertyValue("title_" + lang_cur)</h2>
+            </a>
+            <div class="profile_details_item">
+                <div class="profile_details_item_title">@Umbraco.GetDictionaryValue("EventDate")</div>
+
+                <div class="profile_details_item_desc">@EventPage.GetPropertyValue("dateOfEvent").ToString("dd/MM/yyyy")</div>
+
+            </div>
+            <div class="profile_details_item">
+                <div class="profile_details_item_title">@Umbraco.GetDictionaryValue("EventLocation")</div>
+                <div class="profile_details_item_desc">@EventPage.GetPropertyValue("locationName_" + lang_cur)</div>
+            </div>
+            <div class="profile_details_item">
+                <div class="profile_details_item_title">@Umbraco.GetDictionaryValue("EventLocationDescriptions")</div>
+                <div class="profile_details_item_desc">@EventPage.GetPropertyValue("locationDescriptions_" + lang_cur)</div>
+            </div>
+        </div>
+
+
+
+
+
+        <div>
+            <div id="map" style="height: 300px;width: 100%; pointer-events:none;"></div>
+            <script>
+                function initMap() {
+                    var uluru = { lat: @EventPage.GetPropertyValue("locationCoordinatesLAT"), lng: @EventPage.GetPropertyValue("locationCoordinatesLON") };
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        // draggable: false,
+                        zoom: 12,
+                        center: uluru
+                    });
+                    var marker = new google.maps.Marker({
+                        position: uluru,
+                        map: map
+                    });
+                }
+            </script>
+            <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTu281AkaJ7C3uAeyZIheNF3JsB6-wJug&callback=initMap">
+
+            </script>
+        </div>
+
+
+        <aside id="recent-posts-2" class="widget widget_recent_entries">
+            <h3 class="widgettitle">@EventPage.GetPropertyValue("title_" + lang_cur)</h3>
+            <ul>
+                @foreach (var generic in ((IEnumerable<dynamic>)EventPage.Children))
+                {
+                    if (generic.DocumentTypeAlias == "login")
+                    {
+                        <li><a href="@generic.Url">Register</a></li>
+                        <br />
+                    }
+                    if (generic.DocumentTypeAlias == "genericPage")
+                    {
+                        <li><a href="@generic.Url">@generic.GetPropertyValue("title_" + lang_cur)</a></li>
+                        <br />
+                    }
+                }
+            </ul>
+        </aside>
+
+
+                <aside id="recent-posts-2" class="widget widget_recent_entries">
+                    <h3 class="widgettitle">Downloads</h3>
+                    <ul>
+                        @foreach (var file in ((IEnumerable<dynamic>)EventPage.Children))
+                        {
+                            if (file.DocumentTypeAlias == "fileUpload")
+                            {
+                                <li><a href='@file.GetPropertyValue("filesUpload")'>@file.GetPropertyValue("title_" + lang_cur)</a></li>
+                                <br />}
+                        }
+                    </ul>
+                </aside>
+
+
+
+
+
+                <div class="cmsms_column one_half" style="width: 105%;">
+                    <h2 id="cmsms_heading_553e49e835edb" class="cmsms_heading">Statistics</h2>
+                    <div class="cmsms_stats stats_mode_bars stats_type_circles stats_noborder">
+                        <div class="cmsms_stat_wrap">
+                            <div id="cmsms_stat_553e49e836051" class="cmsms_stat" data-percent="78">
+                                <div class="cmsms_stat_inner">
+                                    <span class="cmsms_stat_title">Ecology</span>
+                                    <span class="cmsms_stat_counter_wrap">
+                                        <span class="cmsms_stat_counter">78</span><span class="cmsms_stat_units">%</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cmsms_stat_wrap">
+                            <div id="cmsms_stat_553e49e8360f4" class="cmsms_stat" data-percent="73">
+                                <div class="cmsms_stat_inner">
+                                    <span class="cmsms_stat_title">Recycling</span>
+                                    <span class="cmsms_stat_counter_wrap">
+                                        <span class="cmsms_stat_counter">73</span><span class="cmsms_stat_units">%</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cmsms_stat_wrap">
+                            <div id="cmsms_stat_553e49e836189" class="cmsms_stat" data-percent="92">
+                                <div class="cmsms_stat_inner">
+                                    <span class="cmsms_stat_title">Organic</span>
+                                    <span class="cmsms_stat_counter_wrap">
+                                        <span class="cmsms_stat_counter">92</span><span class="cmsms_stat_units">%</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cmsms_stat_wrap">
+                            <div id="cmsms_stat_553e49e836214" class="cmsms_stat" data-percent="88">
+                                <div class="cmsms_stat_inner">
+                                    <span class="cmsms_stat_title">Nature</span>
+                                    <span class="cmsms_stat_counter_wrap">
+                                        <span class="cmsms_stat_counter">88</span><span class="cmsms_stat_units">%</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cmsms_stat_wrap">
+                            <div id="cmsms_stat_553e49e83629e" class="cmsms_stat" data-percent="78">
+                                <div class="cmsms_stat_inner">
+                                    <span class="cmsms_stat_title">Support</span>
+                                    <span class="cmsms_stat_counter_wrap">
+                                        <span class="cmsms_stat_counter">78</span><span class="cmsms_stat_units">%</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    }
+}
